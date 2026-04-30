@@ -1,0 +1,116 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="adminMasterPage.master.cs" Inherits="admin_adminMasterPage" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Admin | Price Comparison</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            background: #f5f6fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 51, 132, 0.9);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            transition: 0.3s ease;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+            padding-top: 60px;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 25px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.15);
+            border-left: 4px solid #ffd43b;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #003384 !important;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .content {
+                margin-left: 200px;
+            }
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server" />
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h3><i class="fa-solid fa-tags" style="width:30%"></i> PriceCompare</h3>
+
+            <a href="dashboard.aspx" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="product.aspx"><i class="fa-solid fa-box"></i> Product</a>
+            <a href="category.aspx"><i class="fa-solid fa-layer-group"></i> Category</a>
+            <a href="productshow.aspx"><i class="fa-solid fa-eye"></i> Product Show</a>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div class="content">
+            <nav class="navbar navbar-expand-lg bg-white shadow-sm mb-4 rounded">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Admin Panel</a>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn-outline-primary btn-sm me-2">Profile</a>
+                        <a href="#" class="btn btn-outline-danger btn-sm">Logout</a>
+                    </div>
+                </div>
+            </nav>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+        </div>
+
+    </form>
+</body>
+</html>

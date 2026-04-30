@@ -1,0 +1,579 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><asp:Literal ID="litTitle" runat="server" Text="Product Comparison" /></title>
+
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+
+      
+      :root {
+    --primary: #6d28d9;
+    --primary-dark: #4c1d95;
+    --primary-light: #a78bfa;
+    --secondary: #f59e0b;
+    --accent: #10b981;
+    --dark: #1e1b4b;
+    --light: #f9fafb;
+    --card-shadow: 0 12px 30px -5px rgba(0,0,0,0.15);
+    --hover-shadow: 0 18px 35px rgba(109,40,217,0.25);
+}
+
+body {
+    background: radial-gradient(circle at top left, #ede9fe, #e0f2fe);
+    font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #1f2937;
+}
+
+/* Floating Backgrounds */
+.bg-elements .bg-element {
+    opacity: 0.15;
+    filter: blur(45px);
+    transform-origin: center;
+}
+
+.bg-element-1 {
+    background: var(--primary-light);
+    animation: float 25s ease-in-out infinite;
+}
+.bg-element-2 {
+    background: var(--secondary);
+    animation: float 20s ease-in-out infinite reverse;
+}
+.bg-element-3 {
+    background: var(--accent);
+    animation: float 22s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-25px) scale(1.1); }
+}
+
+/* Navbar enhancements */
+.navbar {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(20px) saturate(150%);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    color: transparent !important;
+    transition: 0.4s;
+}
+.navbar-brand:hover { transform: scale(1.08); }
+
+.nav-link {
+    font-weight: 600;
+    position: relative;
+    color: #4b5563 !important;
+    transition: 0.4s ease;
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--primary) !important;
+    text-shadow: 0 0 8px rgba(109,40,217,0.3);
+    transform: translateY(-1px);
+}
+
+/* Dropdown */
+.bg-elements {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0 !important;  /* 👈 background sabke niche */
+}
+.navbar {
+    position: relative !important;
+    z-index: 9999 !important; /* 👈 dropdown upar aayega */
+}
+.dropdown-menu {
+    z-index: 999999 !important;
+    position: absolute !important;
+}
+
+.dropdown-item {
+    position: relative;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    font-weight: 500;
+}
+.dropdown-item:hover {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    transform: translateX(6px);
+}
+
+.search-form .form-control {
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem 0.75rem 48px;
+    background: rgba(255,255,255,0.85);
+    border: 2px solid #e0e7ff;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 4px 18px rgba(93,53,202,0.08);
+    transition: .35s;
+}
+.search-form .form-control:focus {
+    border-color: #6d28d9;
+    background: #fff;
+    box-shadow: 0 8px 26px rgba(109,40,217,0.25);
+    outline: none;
+}
+
+.search-form .btn {
+    background: linear-gradient(135deg,#6d28d9,#8b5cf6);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(109,40,217,0.2);
+    width: 42px;
+    height: 42px;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+.search-form .btn:hover {
+    background: linear-gradient(135deg,#5b21b6,#a78bfa);
+    box-shadow: 0 8px 28px rgba(109,40,217,0.30);
+    transform: translateY(-50%) scale(1.07) rotate(8deg);
+}
+
+/* Suggestion Box */
+#suggestionBox {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(109,40,217,0.15);
+}
+#suggestionBox a:hover {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+}
+
+/* Fade-in animation */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease forwards;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .navbar { backdrop-filter: blur(15px); }
+    .navbar-brand { font-size: 1.5rem; }
+    .search-form { max-width: 100%; margin-top: 1rem; }
+}
+
+
+/* ENABLE SUBMENU */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
+}
+
+/* ARROW for submenus */
+.dropdown-submenu > a::after {
+    content: "▶";
+    float: right;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.compare-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    border-radius: 14px;
+    width: 240px;
+
+    /* Soft shadow like iPhone menus */
+box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+
+    animation: fadeSlide 0.25s ease-out;
+}
+
+/* Smooth animation on open */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Make your DropDownList look premium */
+.compare-dropdown select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d2d6dc;
+
+    font-size: 14px;
+    background-color: #fefefe;
+
+    transition: all 0.2s;
+}
+
+/* Hover effect */
+.compare-dropdown select:hover {
+    border-color: #a0aec0;
+}
+
+/* Focus effect */
+.compare-dropdown select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* Button link styling improvement */
+.nav-link {
+    cursor: pointer;
+    font-weight: 500;
+}
+/* Show submenu on JS trigger */
+.dropdown-menu.sub-menu {
+    display: none !important;
+    position: absolute;
+    left: 100%;
+    top: 0;
+}
+
+.dropdown-menu.sub-menu.show {
+    display: block !important;
+}
+.global-search::placeholder { padding-left: 12px; }
+.global-search::-webkit-input-placeholder { padding-left: 12px; }
+.global-search:-ms-input-placeholder { padding-left: 12px; }
+/* wishlist ko premium pill look */
+/* Wishlist – remove white background completely */
+.navbar .wishlist-link{
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;   /* agar shadow bhi nahi chahiye */
+}
+
+/* Hover / focus par bhi white na aaye */
+.navbar .wishlist-link:hover,
+.navbar .wishlist-link:focus,
+.navbar .wishlist-link:active{
+    background: none !important;
+    background-color: transparent !important;
+}
+
+/* icon size */
+.wishlist-link i{
+    font-size: 1.05rem;
+}
+
+/* ONLY wishlist: hover par jump/translate disable */
+.wishlist-link:hover,
+.wishlist-link:focus{
+    transform: none !important;
+}
+
+/* hover effect (no jump) */
+
+
+/* mobile me spacing */
+@media (max-width: 991.98px){
+    .wishlist-link{
+        margin-top: 8px;
+        width: fit-content;
+    }
+}
+
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+        <!-- Animated Background Elements -->
+        <div class="bg-elements">
+            <div class="bg-element bg-element-1"></div>
+            <div class="bg-element bg-element-2"></div>
+            <div class="bg-element bg-element-3"></div>
+        </div>
+
+        <!-- ========== NAVBAR ========== -->
+        <nav class="navbar navbar-expand-lg fade-in-up">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="navbar-brand" href="index.aspx">
+                    <i class="fas fa-balance-scale"></i> CompareHub
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <!-- Categories Dropdown -->
+                     <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+        <i class="fas fa-th-large me-1"></i> Categories
+    </a>
+
+    <ul class="dropdown-menu">
+
+        <!-- All Categories Link -->
+        <li>
+            <a class="dropdown-item" href="index.aspx">All Categories</a>
+        </li>
+
+        <!-- Main Category Repeater -->
+        <asp:Repeater ID="rptMenuCategory" runat="server" OnItemDataBound="rptMenuCategory_ItemDataBound">
+            <ItemTemplate>
+             <li class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle"
+               href="#"
+              data-cat='<%# Eval("CatID") %>'>
+        <%# Eval("CategoryName") %>
+    </a>
+
+    <ul class="dropdown-menu sub-menu">
+        <asp:Repeater ID="rptSubCategory" runat="server">
+            <ItemTemplate>
+                <li>
+                    <a class="dropdown-item" href='index.aspx?CatID=<%# Eval("CatID") %>'>
+                        <%# Eval("CategoryName") %>
+                    </a>
+                </li>
+            </ItemTemplate>
+        </asp:Repeater>
+    </ul>
+</li>
+
+            </ItemTemplate>
+        </asp:Repeater>
+
+    </ul>
+</li>
+
+
+                   
+                        <!-- Other Links (Optional) -->
+            <li class="nav-item">
+    <div id="compareWrap" class="compare-dropdown">
+        <asp:DropDownList ID="ddlCompareCategory" CssClass="form-select"
+            runat="server" AutoPostBack="true"
+            OnSelectedIndexChanged="ddlCompareCategory_SelectedIndexChanged">
+        </asp:DropDownList>
+    </div>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="#" onclick="openCompareDropdown(); return false;">
+        <i class="fas fa-exchange-alt me-1"></i> Compare Brand Product
+    </a>
+</li>
+
+                      <li class="nav-item">
+    <a class="nav-link wishlist-link" href="wishlist.aspx" title="Wishlist">
+        <i class="fa-solid fa-heart"></i>
+        <span>Wishlist</span>
+    </a>
+</li>
+
+
+
+
+                    </ul>
+
+                    <!-- Search Form -->
+
+                    <div class="search-form position-relative"> 
+                        <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control global-search"
+                            placeholder="Search products..." autocomplete="off" />
+                        <asp:Button ID="btnSearch" runat="server" CssClass="btn" Text="🔍"
+                            ToolTip="Search" OnClick="btnSearch_Click" />
+
+                        <div id="suggestionBox"
+                            class="list-group position-absolute w-100"
+                            style="display:none;z-index:1000;max-height:200px;overflow-y:auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <div class="container-fluid mt-4">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+       <script>
+           function openCompareDropdown() {
+               var box = document.getElementById("compareWrap");
+
+               if (box.style.display === "none" || box.style.display === "") {
+                   box.style.display = "block";   // OPEN
+               } else {
+                   box.style.display = "none";    // CLOSE
+               }
+           }
+</script>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+
+                const box = document.getElementById("<%= txtSearch.ClientID %>");
+    const suggestion = document.getElementById("suggestionBox");
+
+    box.addEventListener("keyup", function () {
+        const q = this.value.trim();
+        if (q.length < 1) {
+            suggestion.style.display = "none";
+            return;
+        }
+
+        // ----- WORKS FROM MASTER PAGE -----
+        fetch("index.aspx/GetSearchSuggestions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ prefix: q })
+        })
+        .then(response => response.json())
+        .then(result => {
+
+            suggestion.innerHTML = "";
+
+        if (result.d && result.d.length > 0) {
+            result.d.forEach(name => {
+                const a = document.createElement("a");
+            a.className = "list-group-item list-group-item-action";
+            a.textContent = name;
+            a.onclick = () => {
+                box.value = name;
+            suggestion.style.display = "none";
+        };
+        suggestion.appendChild(a);
+    });
+
+    suggestion.style.display = "block";
+} else {
+                suggestion.style.display = "none";
+}
+})
+        .catch(err => console.error("Error:", err));
+});
+
+});
+</script>
+
+  <%--<script>
+      document.addEventListener("DOMContentLoaded", function () {
+
+          // ▶ ONLY ONE SUBMENU OPEN AT A TIME
+          document.querySelectorAll(".sub-toggle").forEach(function (toggle) {
+
+              toggle.addEventListener("click", function (e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  let submenu = this.nextElementSibling;
+
+                  // Close all other submenus
+                  document.querySelectorAll(".dropdown-submenu .dropdown-menu.show")
+                      .forEach(menu => {
+                          if (menu !== submenu) menu.classList.remove("show");
+              });
+
+              // Toggle current submenu
+              submenu.classList.toggle("show");
+          });
+
+      });
+
+      // ▶ DOUBLE CLICK TO REDIRECT
+      document.querySelectorAll(".sub-toggle").forEach(function (a) {
+
+          a.addEventListener("dblclick", function () {
+              const cat = this.getAttribute("data-cat");
+              window.location = "index.aspx?CatID=" + cat;
+          });
+
+      });
+
+      });
+</script>--%>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+
+                // OPEN / CLOSE SUBMENU
+                document.querySelectorAll('.dropdown-submenu > a.dropdown-toggle')
+                    .forEach(function (toggle) {
+
+                        toggle.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            let submenu = this.nextElementSibling;
+
+                            // Close all other submenus
+                            document.querySelectorAll(".dropdown-submenu .sub-menu.show")
+                                .forEach(menu => {
+                                    if (menu !== submenu) menu.classList.remove("show");
+                        });
+
+                        submenu.classList.toggle("show");
+                    });
+
+            });
+
+            });
+</script>
+
+
+
+    </form>
+</body>
+</html>
