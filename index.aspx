@@ -258,7 +258,6 @@ h2 {
     <div class="container py-1">
     <h2 class="mt-3">Explore Products</h2>
     <div class="row g-4 mt-2">
-         <!-- LEFT SIDEBAR CATEGORIES -->
    <asp:Panel ID="sidebarPanel" runat="server" Visible="false" CssClass="col-md-3 mt-5 pt-5">
 
         <div class="card shadow-sm border-0 mt-5">
@@ -286,11 +285,9 @@ h2 {
         <asp:Repeater ID="rptMainCategory" runat="server">
 <ItemTemplate>
 
-    <!-- CATEGORY TITLE -->
     <div class="mt-5">
         <h2 class="mt-4"><%# Eval("CategoryName") %> -</h2>
 
-        <!-- PRODUCT GRID -->
         <div class="owl-carousel product-slider mt-4">
 
             <asp:Repeater ID="rptProducts" runat="server" DataSource='<%# Eval("Products") %>'>
@@ -343,10 +340,9 @@ h2 {
 </div>
 </div>
 
-    <!-- Compare Bar (floating at bottom) -->
 <div id="compareBar" style="display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:14px; z-index:9999; background:#ffffff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.12); padding:10px 14px;">
     <div style="display:flex; align-items:center; gap:12px;">
-        <div><strong>Compare</strong> (<span id="compareCount">0</span>)</div>
+        <div><strong>Compare</strong> (<span id="compareCount"> 0 </span>)</div>
         <div id="compareThumbs" style="display:flex; gap:8px; align-items:center;"></div>
         <div>
             <a id="goCompare" class="btn btn-primary btn-sm" href="compare.aspx" target="_self">Go to Compare</a>
@@ -469,19 +465,16 @@ h2 {
                         $('#compareThumbs').append(html);
                     });
 
-                    // Build link to compare page with multiple product ids (optional)
                     var qs = '?';
                     qs += 'ids=' + list.join(',');
                     $('#goCompare').attr('href', 'compare.aspx' + qs);
                 },
                 error: function () {
-                    // fallback: just show count and generic link
                     $('#goCompare').attr('href', 'compare.aspx?ids=' + list.join(','));
                 }
             });
         }
 
-        // On document ready: bind click handlers
         $(function () {
 
             // Add to compare button click
