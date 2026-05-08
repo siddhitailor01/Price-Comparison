@@ -235,19 +235,7 @@ h2 {
     background: #007bff;
     color: #fff;
 }
-        /*.owl-carousel {
-            background:#fff !important;
-            border:2px solid red;
-        }
-        .owl-stage-outer {
-        background-color:transparent;
-            border:2px solid green;
-
-        }
-        .owl-stage {
-            border:2px solid red;
-
-        }*/
+       
 </style>
 
 </asp:Content>

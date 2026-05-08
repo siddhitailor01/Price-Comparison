@@ -30,10 +30,8 @@ public partial class index : System.Web.UI.Page
             {
                 int id = Convert.ToInt32(Request.QueryString["CatID"]);
 
-                // 1️⃣ Load page products + heading
                 LoadSingleCategory(id);
 
-                // 2️⃣ Load sidebar (direct children only)
                 BindSidebarSubCategories(id);
             }
 
@@ -101,9 +99,7 @@ public partial class index : System.Web.UI.Page
 
 
 
-    // ==========================================================
-    // 🔥 RECURSIVE METHOD → Get ALL Subcategories (infinite depth)
-    // ==========================================================
+  
     private List<int> GetAllSubCategories(int catId)
     {
         List<int> list = new List<int>();
@@ -122,15 +118,13 @@ public partial class index : System.Web.UI.Page
             while (dr.Read())
             {
                 int subId = Convert.ToInt32(dr["CatID"]);
-                list.AddRange(GetAllSubCategories(subId));  // recursive call
+                list.AddRange(GetAllSubCategories(subId));  
             }
         }
         return list;
     }
 
-    // ==========================================================
-    // HOME PAGE: Show Main Categories + Their Products
-    // ==========================================================
+   
     private void LoadCategorySections()
     {
         string connStr = ConfigurationManager.ConnectionStrings["mycon"].ConnectionString;
@@ -150,7 +144,6 @@ public partial class index : System.Web.UI.Page
             {
                 int mainCatID = Convert.ToInt32(cat["CatID"]);
 
-                // 🔥 Get unlimited depth category tree
                 List<int> allCats = GetAllSubCategories(mainCatID);
                 string ids = string.Join(",", allCats);
 
@@ -175,9 +168,7 @@ public partial class index : System.Web.UI.Page
         }
     }
 
-    // ==========================================================
-    // SEARCH RESULTS
-    // ==========================================================
+ 
     private void LoadSearchResults(string keyword)
     {
         string cs = ConfigurationManager.ConnectionStrings["mycon"].ConnectionString;
@@ -210,33 +201,26 @@ public partial class index : System.Web.UI.Page
         }
     }
 
-    // ==========================================================
-    // CATEGORY PAGE → Single Category + All its subcategories
-    // ==========================================================
+   
     private void LoadSingleCategory(int catId)
     {
         string cs = ConfigurationManager.ConnectionStrings["mycon"].ConnectionString;
 
-        // 🔥 1. Check if subcategories exist
         bool hasChild = HasChildCategories(catId);
 
-        // 🔥 2. Sidebar show/hide (from code-behind)
-        sidebarPanel.Visible = hasChild;   // <== यही decide करेगा show/hide
+        sidebarPanel.Visible = hasChild;   
         if (hasChild)
         {
-            // Sidebar hai → productPanel = 9 columns
             productPanel.CssClass = "col-md-9";
         }
         else
         {
-            // Sidebar nahi → productPanel full width
             productPanel.CssClass = "col-md-12";
         }
 
 
         if (hasChild)
         {
-            // load only direct children :)
             using (SqlConnection con = new SqlConnection(cs))
             {
                 SqlDataAdapter da = new SqlDataAdapter(
@@ -251,7 +235,6 @@ public partial class index : System.Web.UI.Page
             }
         }
 
-        // 🔥 3. Load products (infinite depth)
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -283,9 +266,7 @@ public partial class index : System.Web.UI.Page
         }
     }
 
-    // ==========================================================
-    // SEARCH SUGGESTIONS
-    // ==========================================================
+
     [WebMethod]
     public static List<string> GetSearchSuggestions(string prefix)
     {
@@ -306,9 +287,7 @@ public partial class index : System.Web.UI.Page
         return list;
     }
 
-    // ==========================================================
-    // WISHLIST ADD
-    // ==========================================================
+
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
         if (Session["UserID"] == null)
@@ -363,9 +342,7 @@ public partial class index : System.Web.UI.Page
         Response.Redirect(Request.RawUrl);
     }
 
-    // ==========================================================
-    // MODEL
-    // ==========================================================
+
     public class CategorySection
     {
         public int CatID { get; set; }
@@ -386,8 +363,7 @@ public static List<int> AddToCompare(int productId)
     if (!list.Contains(productId))
     {
         list.Add(productId);
-        // Optional: limit compare list size
-        // if (list.Count > 8) list.RemoveAt(0);
+
     }
 
     ctx.Session["CompareList"] = list;
@@ -428,7 +404,6 @@ public static List<ProductSummary> GetProductsSummary(List<int> ids)
     using (SqlConnection con = new SqlConnection(cs))
     {
         con.Open();
-        // build parameterized in-clause
         string inClause = "";
         for (int i = 0; i < ids.Count; i++)
         {
@@ -452,7 +427,6 @@ public static List<ProductSummary> GetProductsSummary(List<int> ids)
     return outList;
 }
 
-// Helper object returned by GetProductsSummary
 public class ProductSummary
 {
     public int ProductID { get; set; }
@@ -460,15 +434,13 @@ public class ProductSummary
     public string ImageUrl { get; set; }
 }
 
-// Helper to convert stored relative image path to full URL (adjust if needed)
 private static string ResolveImageUrl(string img)
 {
     if (string.IsNullOrEmpty(img)) return "~/images/noimage.png";
-    // If you store only filename:
     return VirtualPathUtility.ToAbsolute("~/admin/images/" + img);
 }
 
-// Clear compare
+
 [WebMethod(EnableSession = true)]
 public static string ClearCompare()
 {
