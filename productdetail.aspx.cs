@@ -114,7 +114,6 @@ public partial class productdetail : System.Web.UI.Page
 
                 ViewState["CatID"] = dr["CatID"].ToString();
 
-                // ✅ Save ProductID for compare button
                 ViewState["ProductID"] = productId;
             }
         }
@@ -162,7 +161,6 @@ public partial class productdetail : System.Web.UI.Page
         {
             con.Open();
 
-            // CHECK IF ALREADY IN WISHLIST
             SqlCommand checkCmd = new SqlCommand(
                 "SELECT COUNT(*) FROM Wishlist WHERE UserID=@u AND ProductID=@p", con);
 
@@ -178,14 +176,12 @@ public partial class productdetail : System.Web.UI.Page
                 return;
             }
 
-            // GET CURRENT PRICE
             SqlCommand priceCmd = new SqlCommand(
                 "SELECT Price FROM Products WHERE ProductID=@id", con);
             priceCmd.Parameters.AddWithValue("@id", productId);
 
             decimal currentPrice = Convert.ToDecimal(priceCmd.ExecuteScalar());
 
-            // INSERT INTO WISHLIST
             SqlCommand insertCmd = new SqlCommand(@"
             INSERT INTO Wishlist (UserID, ProductID, OldPrice, AddedDate)
             VALUES (@u, @p, @old, GETDATE())", con);
