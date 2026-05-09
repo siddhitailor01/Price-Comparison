@@ -40,7 +40,6 @@ public partial class productdetail : System.Web.UI.Page
                         string meesho = dr["MeeshoLink"].ToString();
                         string shopsy = dr["ShopsyLink"].ToString();
 
-                        // AMAZON
                         amazonIcon.Visible = !string.IsNullOrWhiteSpace(amazon);
                         if (amazonIcon.Visible) amazonIcon.HRef = amazon;
 
