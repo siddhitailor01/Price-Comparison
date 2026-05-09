@@ -52,19 +52,15 @@ public partial class productdetail : System.Web.UI.Page
                         ajioIcon.Visible = !string.IsNullOrWhiteSpace(ajio);
                         if (ajioIcon.Visible) ajioIcon.HRef = ajio;
 
-                        // CROMA
                         cromaIcon.Visible = !string.IsNullOrWhiteSpace(croma);
                         if (cromaIcon.Visible) cromaIcon.HRef = croma;
 
-                        // RELIANCE
                         relianceIcon.Visible = !string.IsNullOrWhiteSpace(reliance);
                         if (relianceIcon.Visible) relianceIcon.HRef = reliance;
 
-                        // MEESHO
                         meeshoIcon.Visible = !string.IsNullOrWhiteSpace(meesho);
                         if (meeshoIcon.Visible) meeshoIcon.HRef = meesho;
 
-                        // SHOPSY
                         shopsyIcon.Visible = !string.IsNullOrWhiteSpace(shopsy);
                         if (shopsyIcon.Visible) shopsyIcon.HRef = shopsy;
                     }
