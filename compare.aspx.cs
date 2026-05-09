@@ -58,7 +58,6 @@ public partial class compare : System.Web.UI.Page
     {
         con.Open();
 
-        // Build parameterized IN clause
         string[] parameters = ids.Select((id, index) => "@p" + index).ToArray();
         string inClause = string.Join(",", parameters);
 
@@ -95,7 +94,6 @@ public partial class compare : System.Web.UI.Page
      {
          DataRowView row = (DataRowView)e.Item.DataItem;
 
-         // Prices
          var priceList = new List<Tuple<string, decimal?, Action>>
         {
             Tuple.Create("tdAmazon", ToDecimal(row["AmazonPrice"]), new Action(() => hasAmazon = true)),
@@ -123,7 +121,6 @@ public partial class compare : System.Web.UI.Page
                  if (p.Item2.Value == minPrice)
                      cell.Attributes["class"] += " lowest-price";
 
-                 // Mark that this column has at least one valid price
                  p.Item3.Invoke();
              }
              else
@@ -134,7 +131,6 @@ public partial class compare : System.Web.UI.Page
      }
  }
 
- // Helper method
  private decimal? ToDecimal(object val)
  {
      if (val == null || val == DBNull.Value) return null;
