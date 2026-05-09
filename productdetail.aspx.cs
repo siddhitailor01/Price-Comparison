@@ -43,15 +43,12 @@ public partial class productdetail : System.Web.UI.Page
                         amazonIcon.Visible = !string.IsNullOrWhiteSpace(amazon);
                         if (amazonIcon.Visible) amazonIcon.HRef = amazon;
 
-                        // FLIPKART
                         flipkartIcon.Visible = !string.IsNullOrWhiteSpace(flipkart);
                         if (flipkartIcon.Visible) flipkartIcon.HRef = flipkart;
 
-                        // MYNTRA
                         myntraIcon.Visible = !string.IsNullOrWhiteSpace(myntra);
                         if (myntraIcon.Visible) myntraIcon.HRef = myntra;
 
-                        // AJIO
                         ajioIcon.Visible = !string.IsNullOrWhiteSpace(ajio);
                         if (ajioIcon.Visible) ajioIcon.HRef = ajio;
 
